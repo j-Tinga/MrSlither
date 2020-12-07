@@ -91,25 +91,29 @@ public class Snake {
         }
     }
     
-    public void move(int direction){
+    public void move(int direction){ //method receieves direction from main class and moves the snake
         body.remove(0);  //removes the tail of the snake (last index of body)
         body.add(headPosition); //adds the Position of the head to the first index of body
         
         this.setDirection(direction);
         switch (direction){
             case 1:
-                this.setHeadPosition(new Position((this.getHeadPosition().getX())%900, (this.getHeadPosition().getY()-speed)%600));
+                this.setHeadPosition(new Position(headPosition.getX()%900, (headPosition.getY()-speed)%600));
                 break;
             case 2:
-                this.setHeadPosition(new Position((this.getHeadPosition().getX()+speed)%900, (this.getHeadPosition().getY())%600));
+                this.setHeadPosition(new Position((headPosition.getX()+speed)%900, headPosition.getY()%600));
                 break;
             case 3:
-                this.setHeadPosition(new Position((this.getHeadPosition().getX())%900, (this.getHeadPosition().getY()+speed)%600));
+                this.setHeadPosition(new Position(headPosition.getX()%900, (this.getHeadPosition().getY()+speed)%600));
                 break;
             case 4:
-                this.setHeadPosition(new Position((this.getHeadPosition().getX()-speed)%900, (this.getHeadPosition().getY())%600));
+                this.setHeadPosition(new Position((headPosition.getX()-speed)%900, headPosition.getY()%600));
                 break;    
         }
-        
+    }
+    
+    public void eatFood (int foodValue){ //method recieves foodValue and increases its length by foodvalue
+        ++length;
+        body.add(headPosition); //adds the Position of the head to the first index of body
     }
 }
