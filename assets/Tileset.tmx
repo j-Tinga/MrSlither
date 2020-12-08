@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="55" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="4 Walls, Floor &amp; Doors" tilewidth="16" tileheight="16" tilecount="40" columns="8">
+  <image source="4 Walls, Floor &amp; Doors.png" width="128" height="80"/>
+ </tileset>
+ <layer id="2" name="Floor" width="55" height="32">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3DMQ0AAAwEoZvfv+Ca6AgJq6aqqqqqqqq+PCFxhFGAGwAA
+  </data>
+ </layer>
+ <layer id="1" name="Walls" width="55" height="32">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3ZsQnAMBAEwZMcfuj+e5UELkFg9tmFK2DiG0lmwz17lZ5VtBHTxkwbM23MtDHTxkwbM23MtDHTxkwbM23MtDHTxqy77f3296d0e8e0AGX+9dCAGwAA
+  </data>
+ </layer>
+</map>
