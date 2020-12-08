@@ -1,4 +1,6 @@
 import org.newdawn.slick.*;
+import org.newdawn.slick.tiled.TiledMap;
+
 
 public class MrSlither extends BasicGame {
 
@@ -7,12 +9,16 @@ public class MrSlither extends BasicGame {
     static boolean fullscreen = false;
     static boolean showFPS = true;
     static String title = "Mr Slither";
-    static int fpslimit = 60;   //REMINDER: Increasing the fps will also increase snek speed, remember to change snek speed accordingly
+    static int fpslimit = 30;   //REMINDER: Increasing the fps will also increase snek speed, remember to change snek speed accordingly
+    int buffer= 0;
+    int objectLayer;
     
     private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead;
+    private TiledMap map, renderSnake;
     
     Snake snake= new Snake();
     int i, direction = 2;
+    boolean collides;
     
     public MrSlither(String title) {
         super(title);
@@ -21,6 +27,8 @@ public class MrSlither extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         snake.initBody();
+        map = new TiledMap("assets/Tileset.tmx");
+        renderSnake = new TiledMap("assets/Snake.tmx");
         body = new Image("assets/body.png");
         snakeUp = new Image("assets/beautifulman.png"); //current size is 45x45;
         snakeRight = new Image("assets/beautifulman.png");
@@ -34,13 +42,17 @@ public class MrSlither extends BasicGame {
     
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
-        snake.getBody().forEach((renderBody) -> {
-            body.draw((float)renderBody.getX(), (float)renderBody.getY());
+        map.render(0, 0);
+        snake.getHitBox().forEach((renderHitbox) -> {
+            g.draw(renderHitbox);
         });
         activeHead.draw((float)snake.getHeadPosition().getX(), (float)snake.getHeadPosition().getY());
         g.drawString("Snake Coordinates ", 20, 30);
         g.drawString("X: "+ snake.getHeadPosition().getX()%width, 20, 45);
         g.drawString("Y: "+ snake.getHeadPosition().getY()%height, 20, 60);
+        g.drawString("Body X: "+ (snake.getBody().get(9).getX()%width - snake.getHeadPosition().getX()%width), 75, 45);
+        g.drawString("Body Y: "+  (snake.getBody().get(9).getY()%width - snake.getHeadPosition().getY()%width), 75, 60);
+        g.drawString("Collision: "+ collides, 20, 90);
     }
 
     @Override
@@ -63,8 +75,18 @@ public class MrSlither extends BasicGame {
             direction = 4;    
             activeHead = snakeLeft;
         }
-        snake.move(direction);
+        objectLayer = map.getLayerIndex("Wall");
+        buffer++;
+        if(buffer == 15){
+            snake.move(direction);
+            buffer=0;
+            if(map.getTileId(snake.getHeadPosition().getX()/32, snake.getHeadPosition().getY()/32, objectLayer)==1){
+                collides = true;
+            }
+        }
+        
     }
+    
     
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new MrSlither(title));
