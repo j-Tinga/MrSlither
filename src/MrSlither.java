@@ -14,7 +14,7 @@ public class MrSlither extends BasicGame {
     int objectLayer;
     
     private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead;
-    private TiledMap map, renderSnake;
+    private TiledMap map;
     
     Snake snake= new Snake();
     int i, direction = 2;
@@ -28,7 +28,7 @@ public class MrSlither extends BasicGame {
     public void init(GameContainer gc) throws SlickException {
         snake.initBody();
         map = new TiledMap("assets/Tileset.tmx");
-        renderSnake = new TiledMap("assets/Snake.tmx");
+       
         body = new Image("assets/body.png");
         snakeUp = new Image("assets/beautifulman.png"); //current size is 45x45;
         snakeRight = new Image("assets/beautifulman.png");
@@ -42,17 +42,16 @@ public class MrSlither extends BasicGame {
     
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
-        map.render(0, 0);
-        snake.getHitBox().forEach((renderHitbox) -> {
-            g.draw(renderHitbox);
+        map.render(10, 80);
+        snake.getBody().forEach((renderBody) -> {
+           body.draw((float)renderBody.getX(), (float)renderBody.getY());
         });
+        
         activeHead.draw((float)snake.getHeadPosition().getX(), (float)snake.getHeadPosition().getY());
         g.drawString("Snake Coordinates ", 20, 30);
         g.drawString("X: "+ snake.getHeadPosition().getX()%width, 20, 45);
         g.drawString("Y: "+ snake.getHeadPosition().getY()%height, 20, 60);
-        g.drawString("Body X: "+ (snake.getBody().get(9).getX()%width - snake.getHeadPosition().getX()%width), 75, 45);
-        g.drawString("Body Y: "+  (snake.getBody().get(9).getY()%width - snake.getHeadPosition().getY()%width), 75, 60);
-        g.drawString("Collision: "+ collides, 20, 90);
+        g.drawString("Did you kiil yourself: "+ collides, 20, 90);
     }
 
     @Override
@@ -75,18 +74,13 @@ public class MrSlither extends BasicGame {
             direction = 4;    
             activeHead = snakeLeft;
         }
-        objectLayer = map.getLayerIndex("Wall");
         buffer++;
-        if(buffer == 15){
+        if(buffer == 5 && collides == false){    //change Snake Speed here
             snake.move(direction);
+            collides =snake.checkBodyCollision();
             buffer=0;
-            if(map.getTileId(snake.getHeadPosition().getX()/32, snake.getHeadPosition().getY()/32, objectLayer)==1){
-                collides = true;
-            }
         }
-        
     }
-    
     
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new MrSlither(title));
