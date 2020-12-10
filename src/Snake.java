@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Snake {
     private int direction; //Direction goes Clockwise 1=UP, 2=RIGHT, 3=DOWN, 4=LEFT
     private Position headPosition;
@@ -9,14 +8,15 @@ public class Snake {
     private int money;
     private int hunger;
     private int speed;  //Reminder: changing speed will change how long the snake looks
+    int buffer;
     
     public Snake() {  //Default Snake
-        direction = 1;
-        headPosition = new Position(300,250);
-        length = 25;  
+        direction = 2;
+        headPosition = new Position(320,256);
+        length = 3;  
         money = 100;
         hunger = 100;
-        speed = 3;
+        speed = 32;   //Should be equal to the pixel dimensions of the snake
         body = new ArrayList<>();
     }
 
@@ -24,7 +24,9 @@ public class Snake {
         this.headPosition = headPosition;
     }
     
+
     //-------======Getters and Setters======-------
+
     public int getDirection() {
         return direction;
     }
@@ -73,7 +75,7 @@ public class Snake {
         this.hunger = hunger;
     }
 
-    public int getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
@@ -84,19 +86,17 @@ public class Snake {
     //-------======Getters and Setters END======-------
     
     public void initBody(){
-        int i;
-        
-        for (i=length; i>0; i--){
-            body.add(new Position((this.getHeadPosition().getX()-(i*speed)), this.getHeadPosition().getY()));
+        int i, x, y;
+        for (i=length; i>=0; i--){
+            x = this.getHeadPosition().getX()-(i*speed);
+            y = this.getHeadPosition().getY();
+            body.add(new Position(x, y));
         }
     }
-    
+ 
     public void move(int direction){ //method receieves direction from main class and moves the snake
-        body.remove(0);  //removes the tail of the snake (last index of body)
-        body.add(headPosition); //adds the Position of the head to the first index of body
-        
-        this.setDirection(direction);
-        switch (direction){
+            this.setDirection(direction);
+            switch (direction){
             case 1:
                 this.setHeadPosition(new Position(headPosition.getX()%900, (headPosition.getY()-speed)%600));
                 break;
@@ -104,16 +104,32 @@ public class Snake {
                 this.setHeadPosition(new Position((headPosition.getX()+speed)%900, headPosition.getY()%600));
                 break;
             case 3:
-                this.setHeadPosition(new Position(headPosition.getX()%900, (this.getHeadPosition().getY()+speed)%600));
+                this.setHeadPosition(new Position(headPosition.getX()%900, headPosition.getY()+speed%600));
                 break;
             case 4:
                 this.setHeadPosition(new Position((headPosition.getX()-speed)%900, headPosition.getY()%600));
                 break;    
-        }
+            }      
+            body.remove(0);
+            body.add(headPosition);//adds the Position of the head to the first index of body
     }
     
     public void eatFood (int foodValue){ //method recieves foodValue and increases its length by foodvalue
         ++length;
         body.add(headPosition); //adds the Position of the head to the first index of body
+    }
+    
+    public boolean checkBodyCollision(){    //Bery monke brain solution, will improve if I can
+        int i, x, y;
+        boolean retval= false;
+        
+        for(i=0; i < length && retval == false; i++){
+            x = body.get(i).getX();
+            y = body.get(i).getY();
+            if(headPosition.getX() == x && headPosition.getY() == y){
+                retval = true;
+            }
+        }
+        return retval;
     }
 }

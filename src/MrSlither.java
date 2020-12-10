@@ -29,20 +29,22 @@ public class MrSlither extends BasicGame {
         house = new House();
        
         body = new Image("assets/body.png");
-        snakeUp = new Image("assets/beautifulman.png"); //current size is 32x32;
-        snakeRight = new Image("assets/beautifulman.png");
+        snakeUp = new Image("assets/beautifulman.jpg"); //current size is 32x32;
+        snakeRight = new Image("assets/beautifulman.jpg");
         snakeRight.rotate(90);
-        snakeDown = new Image("assets/beautifulman.png");
+        snakeDown = new Image("assets/beautifulman.jpg");
         snakeDown.rotate(180);
-        snakeLeft = new Image("assets/beautifulman.png");
+        snakeLeft = new Image("assets/beautifulman.jpg");
         snakeLeft.rotate(270);
         activeHead = snakeRight;
     }
     
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
+        house.getMap().render(0, 0, 8);   //renders background
         house.getMap().render(0, 0, house.getMapSize());    //renders wall (Changing the order of Layers in House.tmx will affect what is rendered)
         house.getMap().render(0, 0, house.getMapSize()+1);  //renders floor
+        
         snake.getBody().forEach((renderBody) -> {
            body.draw((float)renderBody.getX(), (float)renderBody.getY());
         });
@@ -81,8 +83,6 @@ public class MrSlither extends BasicGame {
             buffer=0;
         }
     }
-    
-    
     
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new MrSlither(title));
