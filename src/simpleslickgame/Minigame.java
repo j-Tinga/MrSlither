@@ -39,11 +39,16 @@ public class Minigame extends BasicGameState {
     private int finished = 0;
     private ColorRandomizer rcolorizer;
     
+    public static int testval = 0;
+    
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         numberOfWires = 6;
         wires = new ArrayList<>();
         rcolorizer = new ColorRandomizer();
+        finished = 0;
+        clicked = false;
+        testval = 0;
         
         connections = new ArrayList<>();
         slots = new ArrayList<>();
@@ -62,14 +67,11 @@ public class Minigame extends BasicGameState {
                 delta+=change;
             }
         }
-        
-        for(int i = 0; i<numberOfWires; i++){
+        for(int i = 0, j=0; i<numberOfWires; i++,j+=2){
             ArrayList<Shape> stuff = new ArrayList<>();
             if(slots.size()!=2){
                 int num1 = new Random().nextInt((slots.size()/2));
                 int num2 = new Random().nextInt((slots.size()/2))+(slots.size()/2);
-                System.out.println("Slot chosen: " + num1);
-                System.out.println("Slot1 chosen: " + num2);
                 Vector2f random1 = slots.get(num1);
                 Vector2f random2 = slots.get(num2);
                 stuff.add(new Circle(random1.x,random1.y,15));
@@ -83,7 +85,7 @@ public class Minigame extends BasicGameState {
                 
                 slots.clear();
             }
-            WireConnectionClass stuff2 = new WireConnectionClass(stuff, rcolorizer.getLRandomColor());
+            WireConnectionClass stuff2 = new WireConnectionClass(stuff, rcolorizer.getLRandomColor(),j,j+1);
             connections.add(stuff2);
         }
         
@@ -100,17 +102,22 @@ public class Minigame extends BasicGameState {
             int y = input.getMouseY();
             connections.forEach((pair) -> {
                 for(Shape c: pair.getPair()){
-                    if(c.contains(x, y)&&pair.getBool()==false){
-                        if(clicked){
-                            if(pair.getColor().equals(wires.get(selected).getColor())&&pair.getBool()==false){
+                    if(c.contains(x, y)&&pair.getBool()==false){ //If circle contains mouse x and y and is not already connected
+                        int shapenum = pair.whichShapeIsThisBro(c);
+                        if(clicked){ //if currently holding wire and the circle clicked is not what wire is attached to
+                            if(pair.getColor().equals(wires.get(selected).getColor())&&pair.getBool()==false&&shapenum!=wires.get(selected).getNum()){ //if circle pair is equal to wire color
                                 renderWire(c.getCenterX(),c.getCenterY());
                                 pair.setBool(true);
                                 finished++;
+                                if(finished==numberOfWires){
+                                    this.testval = 1;
+                                    sbg.enterState(2);
+                                }
                             } else {
                                 wires.remove(selected);
                             }
                         } else {
-                            WireClass wc = new WireClass(c.getCenterX(),c.getCenterY(),x,y,pair.getColor());
+                            WireClass wc = new WireClass(c.getCenterX(),c.getCenterY(),x,y,pair.getColor(),pair.whichShapeIsThisBro(c));
                             wires.add(wc);
                             selected=wires.size()-1; ///GET LAST ADDED WIRE
                         }
@@ -164,6 +171,12 @@ public class Minigame extends BasicGameState {
     @Override
     public int getID() {
         return 1;
+    }
+    
+    @Override
+    public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        System.out.println("Entered");
+        this.init(gc, sbg);
     }
     
     public void renderWire(float x, float y){

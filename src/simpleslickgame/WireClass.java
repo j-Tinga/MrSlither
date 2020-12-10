@@ -19,6 +19,7 @@ public class WireClass {
     private Rectangle temp;
     private Shape wiredraw;
     private Color color;
+    private int num;
     
     public WireClass(float x1, float y1, float x2, float y2){
         wire = new Line(x1,y1,x2,y2);
@@ -26,11 +27,12 @@ public class WireClass {
         wiredraw = temp;
     }
     
-    public WireClass(float x1, float y1, float x2, float y2, Color c){
+    public WireClass(float x1, float y1, float x2, float y2, Color c, int num){
         wire = new Line(x1,y1,x2,y2);
         color = c;
         temp = new Rectangle(x1,y1+5,0,10);
         wiredraw = temp;
+        this.num = num;
     }
     
     public Rectangle getRectangle(){
@@ -47,6 +49,10 @@ public class WireClass {
     
     public Color getColor(){
         return this.color;
+    }
+    
+    public int getNum(){
+        return this.num;
     }
     
     public void setRectangle(Rectangle r){

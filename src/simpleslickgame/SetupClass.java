@@ -8,6 +8,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class SetupClass extends StateBasedGame
 {       
+        public static int finished = 0;
+        
 	public SetupClass(String gamename)
 	{
 		super(gamename);
@@ -32,5 +34,6 @@ public class SetupClass extends StateBasedGame
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         this.addState(new Minigame());
+        this.addState(new StateTest());
     }
 }

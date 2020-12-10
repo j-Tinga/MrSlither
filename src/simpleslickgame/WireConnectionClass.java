@@ -16,6 +16,8 @@ import org.newdawn.slick.geom.Shape;
 public class WireConnectionClass {
     private ArrayList<Shape> pair;
     private Color color;
+    private int slot1;
+    private int slot2;
     private boolean connected = false;
     
     public WireConnectionClass(Shape s1, Shape s2, Color c){
@@ -25,9 +27,11 @@ public class WireConnectionClass {
         this.color = c;
     }
     
-    public WireConnectionClass(ArrayList s, Color c){
+    public WireConnectionClass(ArrayList s, Color c, int s1, int s2){
         this.pair = s;
         this.color = c;
+        this.slot1 = s1;
+        this.slot2 = s2;
     }
     
     public Color getColor(){
@@ -68,5 +72,15 @@ public class WireConnectionClass {
     
     public boolean getBool(){
         return this.connected;
+    }
+    
+    public int whichShapeIsThisBro(Shape s){
+        if(s.equals(this.pair.get(0))){
+            return slot1;
+        } else if(s.equals(this.pair.get(1))){
+            return slot2;
+        } else {
+            return -1;
+        }
     }
 }

@@ -15,8 +15,8 @@ import org.newdawn.slick.Color;
  * @author jbp
  */
 public class ColorRandomizer {
-    private final Color[] colors = {Color.blue,Color.cyan,Color.darkGray,Color.gray,Color.green,
-    Color.lightGray,Color.magenta,Color.orange,Color.pink,Color.red,Color.white,Color.yellow};
+    private final Color[] colors = {Color.blue,Color.cyan,Color.darkGray,Color.green,
+    Color.lightGray,Color.magenta,Color.pink,Color.red,Color.white,Color.yellow};
     private final ArrayList<Color> colorstemp;
     
     public ColorRandomizer(){
