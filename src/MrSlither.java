@@ -1,5 +1,4 @@
 import org.newdawn.slick.*;
-import org.newdawn.slick.tiled.TiledMap;
 
 
 public class MrSlither extends BasicGame {
@@ -7,18 +6,17 @@ public class MrSlither extends BasicGame {
     static int width = 900;
     static int height = 600;
     static boolean fullscreen = false;
-    static boolean showFPS = true;
+    static boolean showFPS = false;
     static String title = "Mr Slither";
     static int fpslimit = 30;   //REMINDER: Increasing the fps will also increase snek speed, remember to change snek speed accordingly
-    int buffer= 0;
-    int objectLayer;
+    int direction=2, buffer= 3;
     
-    private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead;
-    private TiledMap map;
+    private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead; //images used to render the snake
+    boolean died;
     
-    Snake snake= new Snake();
-    int i, direction = 2;
-    boolean collides;
+    //Objects
+    private Snake snake;
+    private House house;
     
     public MrSlither(String title) {
         super(title);
@@ -26,11 +24,12 @@ public class MrSlither extends BasicGame {
 
     @Override
     public void init(GameContainer gc) throws SlickException {
+        snake= new Snake();
         snake.initBody();
-        map = new TiledMap("assets/Tileset.tmx");
+        house = new House();
        
         body = new Image("assets/body.png");
-        snakeUp = new Image("assets/beautifulman.png"); //current size is 45x45;
+        snakeUp = new Image("assets/beautifulman.png"); //current size is 32x32;
         snakeRight = new Image("assets/beautifulman.png");
         snakeRight.rotate(90);
         snakeDown = new Image("assets/beautifulman.png");
@@ -42,20 +41,18 @@ public class MrSlither extends BasicGame {
     
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
-        map.render(10, 80);
+        house.getMap().render(0, 0, house.getMapSize());    //renders wall (Changing the order of Layers in House.tmx will affect what is rendered)
+        house.getMap().render(0, 0, house.getMapSize()+1);  //renders floor
         snake.getBody().forEach((renderBody) -> {
            body.draw((float)renderBody.getX(), (float)renderBody.getY());
         });
         
         activeHead.draw((float)snake.getHeadPosition().getX(), (float)snake.getHeadPosition().getY());
-        g.drawString("Snake Coordinates ", 20, 30);
-        g.drawString("X: "+ snake.getHeadPosition().getX()%width, 20, 45);
-        g.drawString("Y: "+ snake.getHeadPosition().getY()%height, 20, 60);
-        g.drawString("Did you kiil yourself: "+ collides, 20, 90);
     }
 
     @Override
     public void update(GameContainer gc, int delta) throws SlickException {
+        
         Input input = gc.getInput();
         
         if ((input.isKeyDown(Input.KEY_W)|| input.isKeyDown(Input.KEY_UP))&& snake.getDirection() != 3){
@@ -75,12 +72,17 @@ public class MrSlither extends BasicGame {
             activeHead = snakeLeft;
         }
         buffer++;
-        if(buffer == 5 && collides == false){    //change Snake Speed here
+        if(buffer == 4 && died == false){    //change Snake Speed through buffer ( Speed = fps/buffer, current snake moves at 7.5 tiles per second)
             snake.move(direction);
-            collides =snake.checkBodyCollision();
+            died=snake.checkBodyCollision(); //Check for any collisions
+            if(house.checkWallCollision(snake)){
+                house.increaseMapSize();
+            }
             buffer=0;
         }
     }
+    
+    
     
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new MrSlither(title));
