@@ -1,6 +1,8 @@
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class MrSlither extends BasicGame {
+public class MrSlither extends BasicGameState {
 
     static int width = 900;
     static int height = 600;
@@ -13,13 +15,14 @@ public class MrSlither extends BasicGame {
     
     Snake snake= new Snake();
     int i, direction = 2;
-    
-    public MrSlither(String title) {
-        super(title);
+
+    @Override
+    public int getID() {
+        return 3;
     }
 
     @Override
-    public void init(GameContainer gc) throws SlickException {
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         snake.initBody();
         body = new Image("assets/body.png");
         snakeUp = new Image("assets/beautifulman.png"); //current size is 45x45;
@@ -31,10 +34,10 @@ public class MrSlither extends BasicGame {
         snakeLeft.rotate(270);
         activeHead = snakeRight;
     }
-    
+
     @Override
-    public void render(GameContainer gc, Graphics g) throws SlickException {
-        snake.getBody().forEach((renderBody) -> {
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+         snake.getBody().forEach((renderBody) -> {
             body.draw((float)renderBody.getX(), (float)renderBody.getY());
         });
         activeHead.draw((float)snake.getHeadPosition().getX(), (float)snake.getHeadPosition().getY());
@@ -44,8 +47,8 @@ public class MrSlither extends BasicGame {
     }
 
     @Override
-    public void update(GameContainer gc, int delta) throws SlickException {
-        Input input = gc.getInput();
+    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+         Input input = gc.getInput();
         
         if ((input.isKeyDown(Input.KEY_W)|| input.isKeyDown(Input.KEY_UP))&& snake.getDirection() != 3){
             direction = 1;
@@ -65,7 +68,7 @@ public class MrSlither extends BasicGame {
         }
         snake.move(direction);
     }
-    
+/*
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new MrSlither(title));
         app.setDisplayMode(width, height, fullscreen);
@@ -75,5 +78,5 @@ public class MrSlither extends BasicGame {
         app.setShowFPS(showFPS);
         app.start();
     }
-    
+*/
 }
