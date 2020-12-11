@@ -24,7 +24,7 @@ public class MainMenuState extends BasicGameState{
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         bg.draw();
         g.drawString("Mr.Slither",350,100);
-        g.drawString("Play",350,300);
+        g.drawString("PLAY",350,300);
         g.drawString("High Scores",350,400);
     }
 
