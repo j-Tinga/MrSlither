@@ -8,6 +8,9 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author sam
  */
 public class MainState extends StateBasedGame{
+    
+    static boolean showFPS = true;
+    static int fpslimit = 60;
 
     public MainState(String title) {
         super(title);
@@ -17,7 +20,10 @@ public class MainState extends StateBasedGame{
         AppGameContainer app = new AppGameContainer(new MainState("Mr.Slither"));
         
         app.setDisplayMode(800,600,false);
+        app.setSmoothDeltas(true);
         app.setAlwaysRender(true);
+        app.setTargetFrameRate(fpslimit);
+        app.setShowFPS(showFPS);
         
         app.start();
     }

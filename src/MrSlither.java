@@ -25,12 +25,12 @@ public class MrSlither extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         snake.initBody();
         body = new Image("assets/body.png");
-        snakeUp = new Image("assets/beautifulman.png"); //current size is 45x45;
-        snakeRight = new Image("assets/beautifulman.png");
+        snakeUp = new Image("assets/head.png"); //current size is 45x45;
+        snakeRight = new Image("assets/head.png");
         snakeRight.rotate(90);
-        snakeDown = new Image("assets/beautifulman.png");
+        snakeDown = new Image("assets/head.png");
         snakeDown.rotate(180);
-        snakeLeft = new Image("assets/beautifulman.png");
+        snakeLeft = new Image("assets/head.png");
         snakeLeft.rotate(270);
         activeHead = snakeRight;
     }

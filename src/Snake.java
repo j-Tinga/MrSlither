@@ -13,7 +13,7 @@ public class Snake {
     public Snake() {  //Default Snake
         direction = 1;
         headPosition = new Position(300,250);
-        length = 25;  
+        length = 32;  
         money = 100;
         hunger = 100;
         speed = 3;
