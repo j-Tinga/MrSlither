@@ -14,11 +14,11 @@ public class MrSlither extends BasicGameState {
     private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead;
     
     Snake snake= new Snake();
-    int i, direction = 2;
+    int i, direction = 3;
 
     @Override
     public int getID() {
-        return 2;
+        return 3;
     }
 
     @Override
