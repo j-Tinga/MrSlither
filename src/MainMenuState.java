@@ -1,3 +1,4 @@
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -8,7 +9,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainMenuState extends BasicGameState{
     
-    private Image bg;
+    private Image bg,play,hiscore;
+    int Xpos, Ypos;
 
     @Override
     public int getID() {
@@ -18,21 +20,36 @@ public class MainMenuState extends BasicGameState{
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
        bg = new Image("assets/bg.png");
+       play = new Image("assets/play.png");
+       hiscore = new Image("assets/hiscore.png");
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         bg.draw();
-        g.drawString("Mr.Slither",350,100);
-        g.drawString("PLAY",350,300);
-        g.drawString("High Scores",350,400);
+        g.drawString("Mr.Slither",270,100);
+        play.draw(270,300);
+        hiscore.draw(270,400);
+        g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        if(gc.getInput().isKeyPressed(Input.KEY_0)){
-            sbg.enterState(1);
+        Xpos = Mouse.getX();
+        Ypos = Mouse.getY();
+        
+        if((Xpos > 270 && Xpos < 800) && (Ypos > 220 && Ypos < 300)){ //goes to how to play
+            if(Mouse.isButtonDown(0)){
+                sbg.enterState(1);
+            }          
         }
+        
+        if((Xpos > 270 && Xpos < 800) && (Ypos > 200 && Ypos < 125)){ //goes to highscore
+            if(Mouse.isButtonDown(0)){
+                sbg.enterState(1);
+            }          
+        }
+
     }
     
 }
