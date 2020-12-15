@@ -28,8 +28,8 @@ public class MainMenuState extends BasicGameState{
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         bg.draw();
         title.draw(200,70);
-        play.draw(300,300);
-        credits.draw(300,390);
+        play.draw(320,300);
+        credits.draw(320,390);
         g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
@@ -38,13 +38,13 @@ public class MainMenuState extends BasicGameState{
         Xpos = Mouse.getX();
         Ypos = Mouse.getY();
         
-        if((Xpos > 300 && Xpos < 800) && (Ypos > 220 && Ypos < 300)){ //goes to how to play
+        if((Xpos > 320 && Xpos < 570) && (Ypos > 220 && Ypos < 300)){ //goes to how to play
             if(Mouse.isButtonDown(0)){
                 sbg.enterState(1);
             }          
         }
         
-        if((Xpos > 300 && Xpos < 800) && (Ypos > 130 && Ypos < 210)){ //goes to highscore
+        if((Xpos > 320 && Xpos < 570) && (Ypos > 130 && Ypos < 210)){ //goes to highscore
             if(Mouse.isButtonDown(0)){
                 sbg.enterState(2);
             }          
