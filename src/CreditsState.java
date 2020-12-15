@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class HighScoreState extends BasicGameState{
+public class CreditsState extends BasicGameState{
     
     private Image bg;
 
@@ -23,7 +23,7 @@ public class HighScoreState extends BasicGameState{
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         bg.draw();
-        g.drawString("HighScores",270,100);
+        g.drawString("Credits",270,100);
     }
 
     @Override

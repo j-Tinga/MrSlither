@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainMenuState extends BasicGameState{
     
-    private Image bg,title,play,hiscore;
+    private Image bg,title,play,credits;
     int Xpos, Ypos;
 
     @Override
@@ -21,15 +21,15 @@ public class MainMenuState extends BasicGameState{
        bg = new Image("assets/bg.png");
        title = new Image("assets/title.png");
        play = new Image("assets/play.png");
-       hiscore = new Image("assets/hiscore.png");
+       credits = new Image("assets/credits.png");
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         bg.draw();
-        title.draw(150,70);
-        play.draw(270,300);
-        hiscore.draw(270,390);
+        title.draw(200,70);
+        play.draw(310,300);
+        credits.draw(310,390);
         g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
@@ -38,13 +38,13 @@ public class MainMenuState extends BasicGameState{
         Xpos = Mouse.getX();
         Ypos = Mouse.getY();
         
-        if((Xpos > 270 && Xpos < 800) && (Ypos > 220 && Ypos < 300)){ //goes to how to play
+        if((Xpos > 310 && Xpos < 565) && (Ypos > 220 && Ypos < 300)){ //goes to how to play
             if(Mouse.isButtonDown(0)){
                 sbg.enterState(1);
             }         
         }
         
-        if((Xpos > 270 && Xpos < 800) && (Ypos > 130 && Ypos < 210)){ //goes to highscore
+        if((Xpos > 310 && Xpos < 565) && (Ypos > 130 && Ypos < 210)){ //goes to highscore
             if(Mouse.isButtonDown(0)){
                 sbg.enterState(2);
             }          
