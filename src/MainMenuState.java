@@ -30,7 +30,6 @@ public class MainMenuState extends BasicGameState{
         title.draw(200,70);
         play.draw(320,300);
         credits.draw(320,390);
-        g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
     @Override
