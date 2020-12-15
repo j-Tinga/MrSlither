@@ -19,7 +19,7 @@ public class MainState extends StateBasedGame{
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new MainState("Mr.Slither"));
         
-        app.setDisplayMode(800,600,false);
+        app.setDisplayMode(900,600,false);
         app.setSmoothDeltas(true);
         app.setAlwaysRender(true);
         app.setTargetFrameRate(fpslimit);
@@ -32,7 +32,7 @@ public class MainState extends StateBasedGame{
     public void initStatesList(GameContainer gc) throws SlickException {
         this.addState(new MainMenuState());
         this.addState(new HowToPlayState());
-        this.addState(new HighScoreState());
+        this.addState(new CreditsState());
         this.addState(new MrSlither());
     }
     

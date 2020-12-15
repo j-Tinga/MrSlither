@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class HighScoreState extends BasicGameState{
+public class CreditsState extends BasicGameState{
     
     private Image bg;
 
