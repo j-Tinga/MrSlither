@@ -5,6 +5,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MainMenuState extends BasicGameState{
     
@@ -39,13 +41,13 @@ public class MainMenuState extends BasicGameState{
         
         if((Xpos > 320 && Xpos < 570) && (Ypos > 220 && Ypos < 300)){ //goes to how to play
             if(Mouse.isButtonDown(0)){
-                sbg.enterState(1);
+                sbg.enterState(1,new FadeOutTransition(),new FadeInTransition());
             }          
         }
         
         if((Xpos > 320 && Xpos < 570) && (Ypos > 130 && Ypos < 210)){ //goes to highscore
             if(Mouse.isButtonDown(0)){
-                sbg.enterState(2);
+                sbg.enterState(2,new FadeOutTransition(),new FadeInTransition());
             }          
         }
 

@@ -34,6 +34,7 @@ public class MainState extends StateBasedGame{
         this.addState(new HowToPlayState());
         this.addState(new CreditsState());
         this.addState(new MrSlither());
+        this.addState(new GameOverState());
     }
     
 }

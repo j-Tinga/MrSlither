@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class CreditsState extends BasicGameState{
+public class GameOverState extends BasicGameState{
     
     private Image bg,credits,back;
     int Xpos, Ypos;
@@ -28,20 +28,11 @@ public class CreditsState extends BasicGameState{
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         bg.draw();
-        credits.draw(300,200);
-        back.draw(50,50);
         g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-        Xpos = Mouse.getX();
-        Ypos = Mouse.getY();
-       
-        if((Xpos > 50 && Xpos < 100) && (Ypos > 490 && Ypos < 545)){ //goes back
-            if(Mouse.isButtonDown(0)){
-                sbg.enterState(0,new FadeOutTransition(),new FadeInTransition());
-            }          
-        }
+
     }
 }

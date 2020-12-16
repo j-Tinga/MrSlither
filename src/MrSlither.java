@@ -11,7 +11,7 @@ public class MrSlither extends BasicGameState {
     static String title = "Mr Slither";
     static int fpslimit = 60;   //REMINDER: Increasing the fps will also increase snek speed, remember to change snek speed accordingly
     
-    private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead;
+    private Image snakeUp, snakeRight, snakeDown, snakeLeft, body, activeHead,scoreboard;
     
     Snake snake= new Snake();
     int i, direction = 3;
@@ -33,10 +33,12 @@ public class MrSlither extends BasicGameState {
         snakeLeft = new Image("assets/head.png");
         snakeLeft.rotate(270);
         activeHead = snakeRight;
+        scoreboard = new Image("assets/scoreboard.png");
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        scoreboard.draw();
          snake.getBody().forEach((renderBody) -> {
             body.draw((float)renderBody.getX(), (float)renderBody.getY());
         });
