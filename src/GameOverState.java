@@ -8,14 +8,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class CreditsState extends BasicGameState{
+public class GameOverState extends BasicGameState{
     
     private Image bg,credits,back;
     int Xpos, Ypos;
     
     @Override
     public int getID() {
-        return 2;
+        return 5;
     }
 
     @Override
