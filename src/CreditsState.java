@@ -30,7 +30,6 @@ public class CreditsState extends BasicGameState{
         bg.draw();
         credits.draw(300,200);
         back.draw(50,50);
-        g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
     @Override

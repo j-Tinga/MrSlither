@@ -10,7 +10,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class GameOverState extends BasicGameState{
     
-    private Image bg,credits,back;
+    private Image gameover;
     int Xpos, Ypos;
     
     @Override
@@ -20,16 +20,12 @@ public class GameOverState extends BasicGameState{
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-       bg = new Image("assets/bg.png");
-       credits = new Image("assets/creditspage.png");
-       back = new Image("assets/back.png");
+       gameover = new Image("assets/gameover.png");
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        bg.draw();
-        credits.draw(300,200);
-        back.draw(50,50);
+        gameover.draw();
         g.drawString(Xpos + "+" + Ypos,20,20);
     }
 
@@ -38,9 +34,9 @@ public class GameOverState extends BasicGameState{
         Xpos = Mouse.getX();
         Ypos = Mouse.getY();
        
-        if((Xpos > 50 && Xpos < 100) && (Ypos > 490 && Ypos < 545)){ //goes back
+        if((Xpos > 330 && Xpos < 580) && (Ypos > 70 && Ypos < 140)){ //goes back
             if(Mouse.isButtonDown(0)){
-                sbg.enterState(0,new FadeOutTransition(),new FadeInTransition());
+                sbg.enterState(4,new FadeOutTransition(),new FadeInTransition());
             }          
         }
     }

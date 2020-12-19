@@ -14,16 +14,26 @@ public class PlayGameState extends BasicGameState{
     private Food food;
     private Snake snake;
     private House house;
-    private Position freePos;   
+    private Position freePos;
+    private Image scoreboard;
+    
+    Score score = new Score();
+    Meter hungerbar, rentbar;
+    Money mon;
 
     Random rnd = new Random();
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {  //For initializing objects and assets
         snake= new Snake();
+        mon = new Money(snake.getMoney());
         snake.initBody();
         house = new House();
         food = new Food();
+        scoreboard = new Image("assets/scoreboard.png");
+        
+        hungerbar = new Meter(440, 15, 150, 20);
+        rentbar = new Meter(440, 50, 150, 20);
     }
 
     @Override
@@ -31,6 +41,13 @@ public class PlayGameState extends BasicGameState{
         house.getMap().render(0, 0, 8);   //renders background
         house.getMap().render(0, 0, house.getMapSize());    //renders wall (Changing the order of Layers in House.tmx will affect what is rendered)
         house.getMap().render(0, 0, house.getMapSize()+1);  //renders floor
+        
+        //Scoreboard
+        scoreboard.draw();
+        score.scoreBoard(g);
+        hungerbar.setHungerBar(g);
+        rentbar.setRentBar(g);
+        mon.setInitMoney(g);
         
         g.draw(snake.getHeadHitbox());  //render Hitboxes
         g.draw(food.getObjectHitbox());
@@ -72,6 +89,13 @@ public class PlayGameState extends BasicGameState{
            
             buffer=0;
         }
+        
+        //Score wiht no condition
+          score.increaseScore();
+        //Hunger Meter
+          hungerbar.reduceHungerBar();
+        //Rent Meter
+          rentbar.reduceRentBar();
     }
     
      public Position findFreeSpace(){

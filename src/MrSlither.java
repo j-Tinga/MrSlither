@@ -34,6 +34,7 @@ public class MrSlither extends StateBasedGame{
         this.addState(new HowToPlayState());    //id = 1
         this.addState(new CreditsState()); // id =2
         this.addState(new PlayGameState()); // id = 3
+        this.addState(new GameOverState()); // id = 5
     }
     
 }

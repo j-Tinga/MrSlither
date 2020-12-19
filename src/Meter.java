@@ -32,6 +32,7 @@ public class Meter extends Rectangle{
     
     //Getters and Setters
     public void setHungerBar(Graphics g){
+        g.setColor(Color.black);
         g.drawString("Hunger ", 340, 20);
         g.setColor(new Color(255,255,0));//color of bar
         g.fill(this);
@@ -40,6 +41,7 @@ public class Meter extends Rectangle{
         g.draw(this);
     }
     public void setRentBar(Graphics g){
+        g.setColor(Color.black);
         g.drawString("Rent ", 340, 50);
         g.setColor(new Color(255,0,255)); //color of bar
         g.fill(this);
