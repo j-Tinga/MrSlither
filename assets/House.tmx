@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="28" height="19" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
+ <tileset firstgid="1" name="[Base]BaseChip_pipo" tilewidth="32" tileheight="32" tilecount="1064" columns="8">
+  <image source="[Base]BaseChip_pipo.png" width="256" height="4256"/>
+ </tileset>
+ <layer id="1" name="Wall (Level 1)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAX0AOuYGBiWk4nXM5Fu31oy9FCid9S+UftG7UOAbRTk9+0UuHUUjIKBBABC0psmUAgAAA==
+  </data>
+ </layer>
+ <layer id="2" name="Floor (Level 1)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXDFSgykodH7Ru1b9Q+yu0bBaNgpAEAv6ilEVAIAAA=
+  </data>
+ </layer>
+ <layer id="3" name="Wall(Level 2)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAW0BOuYGBiWUwmvZyJs31oi1BALiDFr1L5R+0btGzn2baNiebadim4fBYMDAADgNtJZUAgAAA==
+  </data>
+ </layer>
+ <layer id="4" name="Floor (Level 2)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXDDSgyUgeP2jdq36h9o/aNglFALAAA36SNnFAIAAA=
+  </data>
+ </layer>
+ <layer id="5" name="Wall (Level 3)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAW0AOuYGBiW0wivZ8K0by0WMWoBbGaP2jdq36h9o/YNF/u20bC83k5Dvww2AABY7k9ZUAgAAA==
+  </data>
+ </layer>
+ <layer id="6" name="Floor (Level 3)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXDBSgy0gaP2jdq36h9o/YNd/tGAeUAABSXZN1QCAAA
+  </data>
+ </layer>
+ <layer id="7" name="Wall (Level 4)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXUBOuYGBiW0wmvB+K1TPTz29pR+0btG7Vv1L5R+4aMfdvoWB9tB2IAsvm5HVAIAAA=
+  </data>
+ </layer>
+ <layer id="8" name="Floor (Level 4)" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAVDHSgy0geP2jdq36h9o/aN2je07KMnAADI115RUAgAAA==
+  </data>
+ </layer>
+ <layer id="9" name="Background" width="28" height="19" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXUBJ5A7EUn7A3EgUDMSCccPGrfqH2j9o3aN2rfkLEvEoij6ISjgRgALOgQhlAIAAA=
+  </data>
+ </layer>
+</map>
