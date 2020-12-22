@@ -1,29 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
-/**
- *
- * @author sam
- */
-public class payRent extends FieldObjects{
-    private int Rent;
-    
-    public payRent(){
-        Rent = 0;
+public class PayRent extends FieldObjects{
+    private int payRent = 20;
+    float delay = 15;
+
+    public PayRent() throws SlickException {
+      objectPosition = new Position(250, 352);
+      objectImage = new Image("assets/rent.png"); // please change to PAYRENT
+      objectHitbox =new Rectangle((float)objectPosition.getX(),(float)objectPosition.getY(), 16, 16);
     }
     
-    public int getRent(){
-        return Rent;
+      public int getPayRent() {
+        return payRent;
     }
-    
-    public void setRent(int rent){
-        this.Rent = rent;
-    }
-    
-    public int decreaseAmt(){
-        return Rent-=10; //10 is just a test number, will test out more later 
+
+    public void setPayRent(int payRent) {
+        this.payRent = payRent;
     }
 }
