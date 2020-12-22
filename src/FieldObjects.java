@@ -1,24 +1,56 @@
 
-import java.util.Random;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Shape;
 
 public class FieldObjects {
-    private Position ObjectPosition;
-    private Random r;
+    protected Position objectPosition;
+    protected Image objectImage;
+    protected Shape objectHitbox;
     
+    //Constructors
     public FieldObjects(){
-        r = new Random();
-        ObjectPosition = new Position(r.nextInt(250),r.nextInt(300));
+
     }
     
+    public void moveObject(Position pos){
+        objectHitbox.setX(pos.getX());
+        objectHitbox.setY(pos.getY());
+        objectPosition = pos;
+    }
+    
+    
+    //Getters and Setters
     public Position getPos(){
-        return ObjectPosition;
+        return objectPosition;
     }
     
     public void setPos(Position op){
-        this.ObjectPosition = op;
+        this.objectPosition = op;
     }
-    
-    public void generateObject(){
+
+    public Position getObjectPosition() {
+        return objectPosition;
     }
+
+    public void setObjectPosition(Position objectPosition) {
+        this.objectPosition = objectPosition;
+    }
+
+    public Image getObjectImage() {
+        return objectImage;
+    }
+
+    public void setObjectImage(Image objectImage) {
+        this.objectImage = objectImage;
+    }
+
+    public Shape getObjectHitbox() {
+        return objectHitbox;
+    }
+
+    public void setObjectHitbox(Shape objectHitbox) {
+        this.objectHitbox = objectHitbox;
+    }
+
     
 }
