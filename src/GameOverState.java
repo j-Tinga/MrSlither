@@ -36,7 +36,7 @@ public class GameOverState extends BasicGameState{
        
         if((Xpos > 330 && Xpos < 580) && (Ypos > 70 && Ypos < 140)){ //goes back
             if(Mouse.isButtonDown(0)){
-                sbg.enterState(4,new FadeOutTransition(),new FadeInTransition());
+                sbg.enterState(0,new FadeOutTransition(),new FadeInTransition());
             }          
         }
     }

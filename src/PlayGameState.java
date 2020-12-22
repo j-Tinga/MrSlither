@@ -2,6 +2,8 @@ import java.util.Random;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class PlayGameState extends BasicGameState{
     @Override
@@ -19,7 +21,7 @@ public class PlayGameState extends BasicGameState{
     private Image scoreboard;
     
     private Work work;
-    private PayRent rent;
+    private payRent rent;
     Meter hungerbar, rentbar;
     Score score = new Score();
 
@@ -33,7 +35,7 @@ public class PlayGameState extends BasicGameState{
         food = new Food();
         diet = new Diet();
         work = new Work();
-        rent = new PayRent();
+        rent = new payRent();
         scoreboard = new Image("assets/scoreboard.png");
         
         hungerbar = new Meter(440, 15, 150, 20);
@@ -99,6 +101,10 @@ public class PlayGameState extends BasicGameState{
         if(buffer == 4 && died != true){    //change Snake Speed through buffer ( Speed = fps/buffer, current snake moves at 7.5 tiles per second)
             snake.move(direction);
             died=house.checkWallCollision(snake) || snake.checkSnake(); //Check if snake is still alive (will be replaced with Game Over GameState soon)
+            
+            if(died==true){
+                sbg.enterState(5,new FadeOutTransition(),new FadeInTransition());
+            }    
             
             if(snake.getHeadHitbox().intersects(food.getObjectHitbox())){    //Check if Snake Collides with food
                 freePos = findFreeSpace();  //Finds a free space in the board

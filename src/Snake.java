@@ -158,7 +158,7 @@ public class Snake {
         hungerbar.setWidth(hungerbar.getWidth()+ food.getFoodVal());
 
    }
-    public void increaseRentLength( Meter rentbar, PayRent payRent){
+    public void increaseRentLength( Meter rentbar, payRent payRent){
           rentbar.setWidth(rentbar.getWidth()+ payRent.getPayRent());
 
    }
@@ -173,7 +173,7 @@ public class Snake {
         setMoney(this.money - diet.getDietCost());
             
     }
-    public void decreaseMoney(PayRent payRent){
+    public void decreaseMoney(payRent payRent){
    
         setMoney(this.money - payRent.getPayRent());
             
@@ -203,7 +203,7 @@ public class Snake {
       increaseMoney(work);
     }
     
-    public void eatRent(PayRent payRent, Meter rentbar){ //method recieves 
+    public void eatRent(payRent payRent, Meter rentbar){ //method recieves 
         increaseRentLength(rentbar, payRent);
         decreaseMoney(payRent);
     }
