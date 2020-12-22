@@ -1,9 +1,3 @@
-
-import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Graphics;
 
 public class Score {

@@ -152,6 +152,7 @@ public class Snake {
            
     }
     
+
     public void eatFood (Food food){ //method recieves food object and increases its length by foodvalue
         body.add(0,body.get(length)); //adds the one tile to the tail
         length++;
@@ -170,6 +171,7 @@ public class Snake {
         hungerbar.setWidth(hungerbar.getWidth()+ food.getFoodVal());
 
    }
+
     public void increaseRentLength( Meter rentbar, PayRent payRent){
           rentbar.setWidth(rentbar.getWidth()+ payRent.getPayRent());
 
@@ -185,6 +187,7 @@ public class Snake {
         setMoney(this.money - diet.getDietCost());
             
     }
+
     public void decreaseMoney(PayRent payRent){
    
         setMoney(this.money - payRent.getPayRent());

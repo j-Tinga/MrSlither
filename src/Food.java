@@ -4,10 +4,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Food extends FieldObjects {
-
     private int foodValue = 20;
     private int foodCost = 10;
-    
     //Contructors
 
     public Food() throws SlickException {

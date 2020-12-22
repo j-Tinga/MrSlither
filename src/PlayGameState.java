@@ -21,9 +21,9 @@ public class PlayGameState extends BasicGameState{
     private House house;
     private Position freePos;
     private Image scoreboard;
-    
+
     private boolean paused = false;
-    
+
     private Work work;
     private PayRent rent;
     Meter hungerbar, rentbar;
@@ -53,7 +53,6 @@ public class PlayGameState extends BasicGameState{
         house.getMap().render(0, 0, house.getMapSize()+1);  //renders floor
         
         g.draw(snake.getHeadHitbox());  //render Hitboxes
-        
         
         snake.getBody().forEach((renderBody) -> {   //render image of snakeBody
            snake.getBodyImg().draw((float)renderBody.getX(), (float)renderBody.getY());
@@ -137,10 +136,10 @@ public class PlayGameState extends BasicGameState{
                 freePos = findFreeSpace();  //Finds a free space in the board
                 work.moveObject(freePos);  //Moves the food to new free space
                 snake.eatWork(work);
-                
+
                 paused = true;
                 sbg.enterState(4,new EmptyTransition(),new VerticalSplitTransition());
-                
+
                 
             }else if(snake.getHeadHitbox().intersects(rent.getObjectHitbox())){    //Check if Snake Collides with rent
                 freePos = findFreeSpace();  //Finds a free space in the board
@@ -164,6 +163,7 @@ public class PlayGameState extends BasicGameState{
             snake.addMoney(100);
         }
     }
+       
     
      public Position findFreeSpace(){
         Position freeSpace = new Position();
