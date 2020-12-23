@@ -8,7 +8,7 @@ public class Work extends FieldObjects{
     private int Salary = 50;
     
     public Work() throws SlickException {
-      objectPosition = new Position(400, 352);
+      objectPosition = new Position(384, 192);
       objectImage = new Image("assets/work.png");
       objectHitbox =new Rectangle((float)objectPosition.getX(),(float)objectPosition.getY(), 16, 16);
     }

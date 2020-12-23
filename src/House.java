@@ -15,7 +15,7 @@ public class House {
         minWidth = 224;
         tilesWidth = 14;
         minHeight = 128;
-        tilesHeight = 8;
+        tilesHeight = 7;
     }
 
     public TiledMap getMap() {
@@ -67,13 +67,17 @@ public class House {
     }
 
     
-    public void increaseMapSize(){   //call this method to increase Map Size
-       if(mapSize <= 8){
+    public void increaseMapSize(Snake snake, HouseUpgrade houseUpgrade){   //call this method to increase Map Size
+       if(mapSize <= 7 && snake.getMoney() >= houseUpgrade.getHouseCost()){
            mapSize+=2;
            tilesWidth += 2;
            tilesHeight += 2;
            minWidth -= mapSize * 32; 
-           minHeight -= mapSize * 32;
+           snake.deductMoney(houseUpgrade.getHouseCost());
+           
+           if(mapSize == 7){
+               houseUpgrade.moveObject(new Position(-32,-32));
+           }
        }
     }
             

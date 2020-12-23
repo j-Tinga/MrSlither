@@ -9,7 +9,7 @@ public class Diet extends FieldObjects{
     float delay = 15;
     
     public Diet() throws SlickException {
-        objectPosition = new Position(582, 192);
+        objectPosition = new Position(576, 192);
         objectImage = new Image("assets/GreenApple.png");
         objectHitbox =new Rectangle((float)objectPosition.getX(),(float)objectPosition.getY(), 16, 16);
     }

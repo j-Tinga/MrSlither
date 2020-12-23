@@ -14,17 +14,15 @@ public class Snake {
     private Image activeHead;
     private int length; //length pixels = legnth + speed of snake
     private int money;
-    private int hunger;
+
     private int speed;  //Reminder: changing speed will change how long the snake looks
-    private int rent; 
     int buffer;
     
     public Snake() throws SlickException {  //Default Snake
         direction = 2;
         headPosition = new Position(320,256);
-        length = 5;  
+        length = 3;  
         money = 100;
-        hunger = 100;
         speed = 32;   //Should be equal to the pixel dimensions of the snake
         body = new ArrayList<>();
         
@@ -83,13 +81,6 @@ public class Snake {
         this.money = money;
     }
 
-    public int getHunger() {
-        return hunger;
-    }
-
-    public void setHunger(int hunger) {
-        this.hunger = hunger;
-    }
 
     public float getSpeed() {
         return speed;
@@ -117,8 +108,8 @@ public class Snake {
     public void initBody(){ 
         int i, x, y;
         for (i=length; i>=0; i--){
-            x = this.getHeadPosition().getX()-(i*speed);
-            y = this.getHeadPosition().getY();
+            x = headPosition.getX()-(i*speed);
+            y = headPosition.getY();
             body.add(new Position(x, y));
         }
     }
@@ -149,17 +140,11 @@ public class Snake {
                 activeHead = snakeLeft;
                 break;    
             }    
-           
     }
     
-
     public void eatFood (Food food){ //method recieves food object and increases its length by foodvalue
         body.add(0,body.get(length)); //adds the one tile to the tail
         length++;
-    }
-    
-    public void payRent (PayRent PayRent){ //method recieves 
-        rent = 100;
     }
     
     public void addMoney(int money){
@@ -167,72 +152,56 @@ public class Snake {
     }
     //for collision actions
     public void increaseHungerLength( Meter hungerbar, Food food){
-         
         hungerbar.setWidth(hungerbar.getWidth()+ food.getFoodVal());
-
    }
 
     public void increaseRentLength( Meter rentbar, PayRent payRent){
           rentbar.setWidth(rentbar.getWidth()+ payRent.getPayRent());
-
    }
-    public void decreaseMoney(Food food){
-   
-        setMoney(this.money - food.getFoodCost());
-            
-    }
-    
-    public void decreaseMoney(Diet diet){
-   
-        setMoney(this.money - diet.getDietCost());
-            
-    }
-
-    public void decreaseMoney(PayRent payRent){
-   
-        setMoney(this.money - payRent.getPayRent());
-            
-    }
-    
-    public void increaseMoney(Work work){
-   
-        setMoney(this.getMoney() + work.getSal());
-            
-    }
     //end of collision actions 
     
-    //After it hits an object it will do stuffs
+    //After it hits an object
     public void eatFood (Food food, Meter hungerbar){ //method recieves food object and increases its length by foodvalue
-        body.add(0,body.get(length)); //adds the one tile to the tail
-        length++;
-        increaseHungerLength(hungerbar, food);
-        decreaseMoney(food);
+        if(money > food.getFoodCost()){
+            body.add(0,body.get(length)); //adds the one tile to the tail
+            length++;
+            increaseHungerLength(hungerbar, food);
+            money -= food.getFoodCost();
+        }
     }
     
      public void eatDiet (Diet diet){ //method recieves diet object and decreases length by one at tail
-        body.remove(0);
-        length--;
-        decreaseMoney(diet);
+        if (money > diet.getDietCost() && length > 1){
+            body.remove(0);
+            length--;
+            money -= diet.getDietCost();
+        }
     }
       public void eatWork (Work work){ //method recieves 
-      increaseMoney(work);
+        money += work.getSal();
     }
     
     public void eatRent(PayRent payRent, Meter rentbar){ //method recieves 
-        increaseRentLength(rentbar, payRent);
-        decreaseMoney(payRent);
+        if (money > payRent.getPayRent()){
+            increaseRentLength(rentbar, payRent);
+            money -= 50;
+        }
     }
     //end
     
-    public boolean checkSnake(){  //method checks if Snake is still alive (no collision with body, hungerbar not empty)  
-        return (checkBodyCollision(headPosition) && hunger >0);
+    public void deductMoney(int deduct){
+        money -= deduct;
+    }
+    
+    public boolean checkSnake(Meter rentbar, Meter hungerbar){  //method checks if Snake is still alive (no collision with body, hungerbar not empty)
+        return (checkBodyCollision(headPosition) || hungerbar.isEmpty() || rentbar.isEmpty());
     }
     
     public boolean checkBodyCollision(Position position){
         int i;
         boolean retval = false;
         
-         for(i=0; i < length && retval == false; i++){ //Bery monke brain solution, will improve if I can
+        for(i=0; i < length && retval == false; i++){ //Bery monke brain solution, will improve if I can
             retval = body.get(i).comparePosition(position);
         }
         return retval;

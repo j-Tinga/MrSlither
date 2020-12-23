@@ -8,8 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author sam
  */
 public class MrSlither extends StateBasedGame{
-    
-    static boolean showFPS = true;
+    static boolean showFPS = false;
     static int fpslimit = 30;
 
     public MrSlither(String title) {

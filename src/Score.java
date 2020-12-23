@@ -1,8 +1,13 @@
+import java.awt.Font;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 
 public class Score {
     private static int score = 0;
     Graphics g;
+    Font awtFont = new Font("Courier", Font.BOLD, 24);
+    TrueTypeFont font = new TrueTypeFont(awtFont, false);
     float delay = 30;//time it takes to increase
 
 
@@ -16,15 +21,15 @@ public class Score {
         if(delay > 0){
             delay--;
             if(delay == 0){
-                this.score += 100;
+                score += 10;
                 delay = 30;
             }
         }
     }
     
     public void scoreBoard(Graphics g){
-        g.drawString("Score ", 100, 20);
-        g.drawString(this.getScore() +" pts ", 95, 50);
+        font.drawString(100, 20, "Score ", Color.black);
+        font.drawString(95,50, score +" pts ", Color.black);
     }
     
     //Getters and Setters

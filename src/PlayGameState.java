@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.awt.Font;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -21,9 +22,10 @@ public class PlayGameState extends BasicGameState{
     private House house;
     private Position freePos;
     private Image scoreboard;
+    private HouseUpgrade houseUpgrade;
 
     private boolean paused = false;
-
+    private TrueTypeFont font;
     private Work work;
     private PayRent rent;
     Meter hungerbar, rentbar;
@@ -40,10 +42,12 @@ public class PlayGameState extends BasicGameState{
         diet = new Diet();
         work = new Work();
         rent = new PayRent();
+        houseUpgrade = new HouseUpgrade();
         scoreboard = new Image("assets/scoreboard.png");
-        
         hungerbar = new Meter(440, 15, 150, 20);
         rentbar = new Meter(440, 50, 150, 20);
+        Font awtFont = new Font("Courier", Font.BOLD, 24);
+        font = new TrueTypeFont(awtFont, false);
     }
 
     @Override
@@ -54,17 +58,15 @@ public class PlayGameState extends BasicGameState{
         
         g.draw(snake.getHeadHitbox());  //render Hitboxes
         
+        food.getObjectImage().draw((float)food.getObjectPosition().getX(), (float)food.getObjectPosition().getY()); //renders image of food
+        work.getObjectImage().draw((float) work.getObjectPosition().getX(), (float) work.getObjectPosition().getY()); //renders image of work
+        rent.getObjectImage().draw((float) rent.getObjectPosition().getX(), (float) rent.getObjectPosition().getY()); //renders image of rent
+        diet.getObjectImage().draw((float) diet.getObjectPosition().getX(), (float) diet.getObjectPosition().getY()); //renders image of rent
+        houseUpgrade.getObjectImage().draw((float) houseUpgrade.getObjectPosition().getX(), (float) houseUpgrade.getObjectPosition().getY());
         snake.getBody().forEach((renderBody) -> {   //render image of snakeBody
            snake.getBodyImg().draw((float)renderBody.getX(), (float)renderBody.getY());
         });   
         snake.getActiveHead().draw((float)snake.getHeadPosition().getX(), (float)snake.getHeadPosition().getY());  //render image of snake Head
-        food.getObjectImage().draw((float)food.getObjectPosition().getX(), (float)food.getObjectPosition().getY()); //renders image of food
-        
-         
-        work.getObjectImage().draw((float) work.getObjectPosition().getX(), (float) work.getObjectPosition().getY()); //renders image of work
-        rent.getObjectImage().draw((float) rent.getObjectPosition().getX(), (float) rent.getObjectPosition().getY()); //renders image of rent
-        diet.getObjectImage().draw((float) diet.getObjectPosition().getX(), (float) diet.getObjectPosition().getY()); //renders image of rent
-      
         
         //Scoreboard
         scoreboard.draw();
@@ -72,8 +74,8 @@ public class PlayGameState extends BasicGameState{
         hungerbar.setHungerBar(g);
         rentbar.setRentBar(g);
          //money board    
-        g.drawString("Money ", 700, 20);
-        g.drawString(" $ "+ snake.getMoney(), 680, 50);
+        font.drawString(700, 20, "Money ", Color.black);
+        font.drawString(700, 50, "$ "+ snake.getMoney(), Color.black);
     }
     
     @Override
@@ -82,12 +84,7 @@ public class PlayGameState extends BasicGameState{
         Input input = gc.getInput();
         
         if(input.isKeyPressed(Input.KEY_ESCAPE)){
-            System.out.println("Escape pressed");
-            if(paused){
-                paused = false;
-            } else {
-                paused = true;
-            }
+            paused = !paused;
         }
         
         if ((input.isKeyDown(Input.KEY_W)|| input.isKeyDown(Input.KEY_UP))&& snake.getDirection() != 3){
@@ -121,10 +118,12 @@ public class PlayGameState extends BasicGameState{
         buffer++;
         if(buffer == 4 && died != true){    //change Snake Speed through buffer ( Speed = fps/buffer, current snake moves at 7.5 tiles per second)
             snake.move(direction);
-            died=house.checkWallCollision(snake) || snake.checkSnake(); //Check if snake is still alive (will be replaced with Game Over GameState soon)
+            died=house.checkWallCollision(snake) || snake.checkSnake(rentbar, hungerbar); //Check if snake is still alive (will be replaced with Game Over GameState soon)
             
             if(died==true){
+                died = false;
                 sbg.enterState(5,new FadeOutTransition(),new FadeInTransition());
+                init(gc, sbg);
             }    
             
             if(snake.getHeadHitbox().intersects(food.getObjectHitbox())){    //Check if Snake Collides with food
@@ -136,10 +135,8 @@ public class PlayGameState extends BasicGameState{
                 freePos = findFreeSpace();  //Finds a free space in the board
                 work.moveObject(freePos);  //Moves the food to new free space
                 snake.eatWork(work);
-
                 paused = true;
                 sbg.enterState(4,new EmptyTransition(),new VerticalSplitTransition());
-
                 
             }else if(snake.getHeadHitbox().intersects(rent.getObjectHitbox())){    //Check if Snake Collides with rent
                 freePos = findFreeSpace();  //Finds a free space in the board
@@ -150,8 +147,13 @@ public class PlayGameState extends BasicGameState{
                 freePos = findFreeSpace();  //Finds a free space in the board
                 diet.moveObject(freePos);  //Moves the diet to new free space
                 snake.eatDiet(diet);    //Snake eats diet and shortens
+                
+            }else if(snake.getHeadHitbox().intersects(houseUpgrade.getObjectHitbox())){    //Check if Snake Collides with diet
+                freePos = findFreeSpace();  //Finds a free space in the board
+                houseUpgrade.moveObject(freePos);  //Moves the diet to new free space
+                house.increaseMapSize(snake, houseUpgrade);    //Snake eats diet and shortens
             }
-                  buffer=0;     
+                buffer=0;     
         }
         }
     }
@@ -159,18 +161,17 @@ public class PlayGameState extends BasicGameState{
     @Override
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
         if(paused){
-            System.out.println("Resuming game from minigame");
             snake.addMoney(100);
         }
     }
        
-    
      public Position findFreeSpace(){
         Position freeSpace = new Position();
         do{
             freeSpace.setX(house.getMinWidth() + rnd.nextInt(house.getTilesWidth())*32);
             freeSpace.setY(house.getMinHeight() + rnd.nextInt(house.getTilesHeight())*32);
-        }while(snake.checkBodyCollision(freeSpace));
+        }while(snake.checkBodyCollision(freeSpace) || diet.getObjectPosition().comparePosition(freeSpace) || rent.getObjectPosition().comparePosition(freeSpace)
+                || work.getObjectPosition().comparePosition(freeSpace) || food.getObjectPosition().comparePosition(freeSpace));
        return freeSpace;
     }
     
